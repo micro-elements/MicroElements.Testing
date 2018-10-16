@@ -1,0 +1,12 @@
+<Project>
+  <Import Project="version.props" />
+  <PropertyGroup>
+    <Copyright>2018</Copyright>
+    <Authors>alexey.petriashev;MicroElements</Authors>
+    <PackageIconUrl>https://raw.githubusercontent.com/micro-elements/MicroElements/master/image/logo_rounded.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/micro-elements/MicroElements.Testing</PackageProjectUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/micro-elements/MicroElements.Testing.git/master/LICENSE</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/micro-elements/MicroElements.Testing.git</RepositoryUrl>
+  </PropertyGroup>
+</Project>
