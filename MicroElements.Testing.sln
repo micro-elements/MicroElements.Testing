@@ -11,7 +11,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{B30F1561-5
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroElements.Testing.Tests", "test\MicroElements.Testing.Tests\MicroElements.Testing.Tests.csproj", "{2B519AD4-A935-4093-8931-78143E61E2E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroElements.Testing.xUnit", "src\MicroElements.Testing.xUnit\MicroElements.Testing.xUnit.csproj", "{FD478054-F3CF-4583-A7BC-E3ACA13407B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroElements.Testing.XUnit", "src\MicroElements.Testing.xUnit\MicroElements.Testing.XUnit.csproj", "{FD478054-F3CF-4583-A7BC-E3ACA13407B5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EF167894-C95B-4585-8A0C-CC3265CEA7B9}"
+	ProjectSection(SolutionItems) = preProject
+		CHANGELOG.md = CHANGELOG.md
+		README.md = README.md
+		version.props = version.props
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

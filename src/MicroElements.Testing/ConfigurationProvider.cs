@@ -4,13 +4,21 @@ using Microsoft.Extensions.Configuration;
 
 namespace MicroElements.Testing
 {
+    /// <summary>
+    /// Provides configuration for test.
+    /// </summary>
+    /// <typeparam name="TTest">Real test type.</typeparam>
+    /// <typeparam name="TConfiguration">Configuration type.</typeparam>
     public class ConfigurationProvider<TTest, TConfiguration> : IDisposable
         where TConfiguration : ITestConfiguration, new()
     {
-        public IConfiguration Configuration;
-        public string CommandLine;
-        public TConfiguration TestConfiguration;
+        public IConfiguration Configuration { get; }
+        public TConfiguration TestConfiguration { get; }
+        public string CommandLine { get; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConfigurationProvider{TTest, TConfiguration}"/> class.
+        /// </summary>
         public ConfigurationProvider()
         {
             Configuration = new ConfigurationBuilder()
@@ -34,7 +42,6 @@ namespace MicroElements.Testing
             Configuration.Bind(TestConfiguration);
 
             CommandLine = Environment.CommandLine;
-
         }
 
         public void InitializeOnce()
