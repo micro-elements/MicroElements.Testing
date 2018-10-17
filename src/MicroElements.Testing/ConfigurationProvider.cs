@@ -9,12 +9,14 @@ namespace MicroElements.Testing
     /// </summary>
     /// <typeparam name="TTest">Real test type.</typeparam>
     /// <typeparam name="TConfiguration">Configuration type.</typeparam>
-    public class ConfigurationProvider<TTest, TConfiguration> : IDisposable
+    public class ConfigurationProvider<TTest, TConfiguration> : IConfigurationProvider<TConfiguration>, IDisposable
         where TConfiguration : ITestConfiguration, new()
     {
-        public IConfiguration Configuration { get; }
+        /// <inheritdoc />
         public TConfiguration TestConfiguration { get; }
-        public string CommandLine { get; }
+
+        /// <inheritdoc />
+        public IConfiguration Configuration { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationProvider{TTest, TConfiguration}"/> class.
@@ -26,27 +28,25 @@ namespace MicroElements.Testing
                 .AddEnvironmentVariables()
                 .Build();
 
-            TestConfiguration = new TConfiguration();
-            Configuration.Bind(TestConfiguration);
+            var conf = new TestConfiguration();
+            Configuration.Bind(conf);
+            string environment = conf.Environment;
 
             var assemblyName = typeof(TTest).Assembly.GetName().Name;
-            var settingsFileName = $"TestConfiguration/{assemblyName}.{TestConfiguration.Environment}.json";
+            var settingsFileName = $"TestConfiguration/{assemblyName}.{environment}.json";
 
             Configuration = new ConfigurationBuilder()
                 .AddInMemoryCollection(new[] { new KeyValuePair<string, string>("Environment", "dev"), })
-                .AddJsonFile($"{settingsFileName}")
+                .AddJsonFile($"{settingsFileName}", optional: true)
                 .AddEnvironmentVariables()
                 .Build();
 
             TestConfiguration = new TConfiguration();
             Configuration.Bind(TestConfiguration);
-
-            CommandLine = Environment.CommandLine;
         }
 
         public void InitializeOnce()
         {
-
         }
 
         public void Dispose()

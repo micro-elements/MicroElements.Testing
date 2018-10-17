@@ -8,6 +8,6 @@ namespace MicroElements.Testing
         /// <summary>
         /// Gets environment.
         /// </summary>
-        string Environment { get; }
+        string Environment { get; set; }
     }
 }

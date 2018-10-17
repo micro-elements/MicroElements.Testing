@@ -1,3 +1,6 @@
+# 0.3.0
+- IConfigurationProvider that holds typed and untyped test configuration
+
 # 0.2.0
 - Added Output to IntegrationTest
 - Added base Logging infrastructure for xUnit

@@ -17,14 +17,19 @@ namespace MicroElements.Testing.XUnit
         protected ITestOutputHelper Output { get; }
 
         /// <summary>
-        /// Test configuration.
+        /// Test configuration provider.
         /// </summary>
-        protected TConfiguration Configuration { get; }
+        protected IConfigurationProvider<TConfiguration> ConfigurationProvider { get; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="IntegrationTest{TTest, TConfiguration}"/> class.
+        /// </summary>
+        /// <param name="provider">Configuration provider.</param>
+        /// <param name="outputHelper">XUnit test output.</param>
         public IntegrationTest(ConfigurationProvider<TTest, TConfiguration> provider, ITestOutputHelper outputHelper)
         {
             Output = outputHelper;
-            Configuration = provider.TestConfiguration;
+            ConfigurationProvider = provider;
         }
     }
 }
