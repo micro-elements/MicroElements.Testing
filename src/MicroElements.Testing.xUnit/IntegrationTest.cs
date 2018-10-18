@@ -8,8 +8,10 @@ namespace MicroElements.Testing.XUnit
     /// </summary>
     /// <typeparam name="TTest">Type of real test class.</typeparam>
     /// <typeparam name="TConfiguration">Type of configuration.</typeparam>
-    public class IntegrationTest<TTest, TConfiguration> : IClassFixture<ConfigurationProvider<TTest, TConfiguration>>
-        where TConfiguration : ITestConfiguration, new()
+    /// <typeparam name="TConfigurationLoader">Configuration loader.</typeparam>
+    public class IntegrationTest<TTest, TConfiguration, TConfigurationLoader> : IClassFixture<ConfigurationProvider<TTest, TConfiguration, TConfigurationLoader>>
+        where TConfiguration : new()
+        where TConfigurationLoader : IConfigurationLoader, new()
     {
         /// <summary>
         /// Test output.
@@ -17,16 +19,16 @@ namespace MicroElements.Testing.XUnit
         protected ITestOutputHelper Output { get; }
 
         /// <summary>
-        /// Test configuration provider.
+        /// Gets test configuration provider.
         /// </summary>
         protected IConfigurationProvider<TConfiguration> ConfigurationProvider { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="IntegrationTest{TTest, TConfiguration}"/> class.
+        /// Initializes a new instance of the <see cref="IntegrationTest{TTest, TConfiguration, TConfigurationLoader}"/> class.
         /// </summary>
         /// <param name="provider">Configuration provider.</param>
         /// <param name="outputHelper">XUnit test output.</param>
-        public IntegrationTest(ConfigurationProvider<TTest, TConfiguration> provider, ITestOutputHelper outputHelper)
+        public IntegrationTest(ConfigurationProvider<TTest, TConfiguration, TConfigurationLoader> provider, ITestOutputHelper outputHelper)
         {
             Output = outputHelper;
             ConfigurationProvider = provider;

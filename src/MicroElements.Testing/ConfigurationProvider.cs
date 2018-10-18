@@ -9,40 +9,51 @@ namespace MicroElements.Testing
     /// </summary>
     /// <typeparam name="TTest">Real test type.</typeparam>
     /// <typeparam name="TConfiguration">Configuration type.</typeparam>
-    public class ConfigurationProvider<TTest, TConfiguration> : IConfigurationProvider<TConfiguration>, IDisposable
-        where TConfiguration : ITestConfiguration, new()
+    /// <typeparam name="TConfigurationLoader">Real configuration loader.</typeparam>
+    public class ConfigurationProvider<TTest, TConfiguration, TConfigurationLoader> : IConfigurationProvider<TConfiguration>, IDisposable
+        where TConfiguration : new()
+        where TConfigurationLoader : IConfigurationLoader, new()
     {
         /// <inheritdoc />
-        public TConfiguration TestConfiguration { get; }
+        public ITestStartupConfiguration TestStartupConfiguration { get; private set; }
 
         /// <inheritdoc />
-        public IConfiguration Configuration { get; }
+        public TConfiguration TestConfiguration { get; private set; }
+
+        /// <inheritdoc />
+        public IConfiguration Configuration { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ConfigurationProvider{TTest, TConfiguration}"/> class.
+        /// Initializes a new instance of the <see cref="ConfigurationProvider{TTest, TConfiguration, TConfigurationLoader}"/> class.
         /// </summary>
         public ConfigurationProvider()
         {
-            Configuration = new ConfigurationBuilder()
-                .AddInMemoryCollection(new[] { new KeyValuePair<string, string>("Environment", "dev"), })
-                .AddEnvironmentVariables()
-                .Build();
+            // Startup configuration
+            TestStartupConfiguration = InitializeTestStartupConfiguration();
 
-            var conf = new TestConfiguration();
-            Configuration.Bind(conf);
-            string environment = conf.Environment;
+            // Main configuration
+            Configuration = new TConfigurationLoader().InitializeConfiguration(TestStartupConfiguration);
 
-            var assemblyName = typeof(TTest).Assembly.GetName().Name;
-            var settingsFileName = $"TestConfiguration/{assemblyName}.{environment}.json";
-
-            Configuration = new ConfigurationBuilder()
-                .AddInMemoryCollection(new[] { new KeyValuePair<string, string>("Environment", "dev"), })
-                .AddJsonFile($"{settingsFileName}", optional: true)
-                .AddEnvironmentVariables()
-                .Build();
-
+            // Typed configuration
             TestConfiguration = new TConfiguration();
             Configuration.Bind(TestConfiguration);
+        }
+
+        private static ITestStartupConfiguration InitializeTestStartupConfiguration()
+        {
+            var startupConfiguration = new ConfigurationBuilder()
+                .AddInMemoryCollection(new[]
+                {
+                    new KeyValuePair<string, string>(nameof(ITestStartupConfiguration.ConfigurationPath), "TestConfiguration"),
+                    new KeyValuePair<string, string>(nameof(ITestStartupConfiguration.Profile), "dev"),
+                })
+                .AddEnvironmentVariables()
+                .Build();
+
+            var testStartupConfiguration = new TestStartupConfiguration();
+            testStartupConfiguration.TestType = typeof(TTest);
+            startupConfiguration.Bind(testStartupConfiguration);
+            return testStartupConfiguration;
         }
 
         public void InitializeOnce()

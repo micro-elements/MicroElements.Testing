@@ -1,10 +1,7 @@
 namespace MicroElements.Testing.Tests
 {
-    public class SampleTestConfiguration : ITestConfiguration
+    public class SampleTestConfiguration
     {
-        /// <inheritdoc />
-        public string Environment { get; set; }
-
         /// <summary>
         /// Host for integration test.
         /// </summary>

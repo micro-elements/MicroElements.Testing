@@ -5,10 +5,10 @@ using Xunit.Abstractions;
 
 namespace MicroElements.Testing.Tests
 {
-    public class SampleIntegrationTest : IntegrationTest<SampleIntegrationTest, SampleTestConfiguration>
+    public class SampleIntegrationTest : IntegrationTest<SampleIntegrationTest, SampleTestConfiguration, DefaultConfigurationLoader>
     {
         /// <inheritdoc />
-        public SampleIntegrationTest(ConfigurationProvider<SampleIntegrationTest, SampleTestConfiguration> provider, ITestOutputHelper outputHelper) : base(provider, outputHelper)
+        public SampleIntegrationTest(ConfigurationProvider<SampleIntegrationTest, SampleTestConfiguration, DefaultConfigurationLoader> provider, ITestOutputHelper outputHelper) : base(provider, outputHelper)
         {
         }
 
@@ -17,8 +17,8 @@ namespace MicroElements.Testing.Tests
         {
             Output.WriteLine("SampleTest started");
             
-            ConfigurationProvider.Configuration["Environment"].Should().Be("dev");
-            ConfigurationProvider.TestConfiguration.Environment.Should().Be("dev");
+            ConfigurationProvider.Configuration["Profile"].Should().Be("dev");
+            ConfigurationProvider.TestStartupConfiguration.Profile.Should().Be("dev");
             ConfigurationProvider.TestConfiguration.Host.Should().Be("http://google.com");
         }
     }

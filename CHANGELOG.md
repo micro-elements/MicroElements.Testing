@@ -1,3 +1,6 @@
+# 0.4.0
+- IConfigurationLoader support to extend configuration loading
+
 # 0.3.0
 - IConfigurationProvider that holds typed and untyped test configuration
 

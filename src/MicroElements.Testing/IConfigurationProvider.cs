@@ -9,6 +9,11 @@ namespace MicroElements.Testing
     public interface IConfigurationProvider<out TConfiguration>
     {
         /// <summary>
+        /// Test startup configuration.
+        /// </summary>
+        ITestStartupConfiguration TestStartupConfiguration { get; }
+
+        /// <summary>
         /// Typed test configuration.
         /// </summary>
         TConfiguration TestConfiguration { get; }
