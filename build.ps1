@@ -36,7 +36,7 @@ $Script = Join-Path $TOOLS_DIR "microelements.devops/$DEVOPS_VERSION/scripts/mai
 $cake_props = @"
 <Project Sdk="Microsoft.NET.Sdk">
 <PropertyGroup>
-  <TargetFramework>netstandard3.0</TargetFramework>
+  <TargetFramework>netcoreapp3.0</TargetFramework>
 </PropertyGroup>
 <ItemGroup>
   <PackageReference Include="Cake.CoreCLR" Version="$CAKE_VERSION" />
