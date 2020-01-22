@@ -14,7 +14,7 @@ SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 TOOLS_DIR=$SCRIPT_DIR/tools
 
 # Script to run.
-SCRIPT="$TOOLS_DIR/microelements.devops/$DEVOPS_VERSION/scripts/main.cake"
+SCRIPT=$TOOLS_DIR/microelements.devops/$DEVOPS_VERSION/scripts/main.cake
 
 CAKE_PROPS_PATH=$TOOLS_DIR/cake.props
 CAKE_VERSION="0.35.0"
@@ -31,14 +31,14 @@ for i in "$@"; do
     shift
 done
 
-CAKE_ARGUMENTS+=("--rootDir=\"$SCRIPT_DIR\"");
+CAKE_ARGUMENTS+=("--rootDir=$SCRIPT_DIR");
 CAKE_ARGUMENTS+=("--devOpsVersion=$DEVOPS_VERSION");
-CAKE_ARGUMENTS+=("--devOpsRoot=\"$TOOLS_DIR/microelements.devops/$DEVOPS_VERSION\"");
+CAKE_ARGUMENTS+=("--devOpsRoot=$TOOLS_DIR/microelements.devops/$DEVOPS_VERSION");
 
 echo "===========VARIABLES============"
 echo "SCRIPT_DIR: $SCRIPT_DIR"
+echo "SCRIPT: $SCRIPT"
 echo "TOOLS_DIR: $TOOLS_DIR"
-echo "CAKE_DLL: $CAKE_DLL"
 echo "NUGET_URL: $NUGET_URL"
 echo "CAKE_PROPS_PATH: $CAKE_PROPS_PATH"
 echo "CAKE_ARGUMENTS: ${CAKE_ARGUMENTS[*]}"
@@ -70,8 +70,8 @@ EOL
     cat "$CAKE_PROPS_PATH"
 fi
 
-# Restore Cake
-dotnet restore $CAKE_PROPS_PATH --packages $TOOLS_DIR --source "$NUGET_URL" --source "$NUGET_BETA_URL"
+# Restore Cake and Packages
+dotnet restore $CAKE_PROPS_PATH --packages $TOOLS_DIR --source "$NUGET_URL"
 dotnet tool restore
 
 # Start Cake
