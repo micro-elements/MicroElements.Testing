@@ -9,14 +9,17 @@ namespace MicroElements.Testing.XUnit.Logging
     public class XUnitLoggerProvider : ILoggerProvider
     {
         private readonly ITestOutputHelper _output;
+        private readonly LogLevel _minLogLevel;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="XUnitLoggerProvider"/> class.
         /// </summary>
         /// <param name="output">Test output.</param>
-        public XUnitLoggerProvider(ITestOutputHelper output)
+        /// <param name="minLogLevel">Minimal log level.</param>
+        public XUnitLoggerProvider(ITestOutputHelper output, LogLevel minLogLevel = LogLevel.Trace)
         {
             _output = output;
+            _minLogLevel = minLogLevel;
         }
 
         /// <inheritdoc />
@@ -27,7 +30,7 @@ namespace MicroElements.Testing.XUnit.Logging
         /// <inheritdoc />
         public ILogger CreateLogger(string categoryName)
         {
-            return new XUnitLogger(_output);
+            return new XUnitLogger(_output, _minLogLevel);
         }
     }
 }

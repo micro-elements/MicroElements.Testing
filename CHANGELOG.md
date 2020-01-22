@@ -1,3 +1,6 @@
+# 0.4.1
+- Added option of setting minimal log level
+
 # 0.4.0
 - IConfigurationLoader support to extend configuration loading
 
